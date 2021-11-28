@@ -17,7 +17,8 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
     <title>블로그</title>
-    <script src="/js/board.js"></script>
+    <link rel="stylesheet" href="/css/board.css">
+    <script src="/js/detailpost.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
     <style>
         * {
@@ -45,9 +46,11 @@
         <!--        로그인 여부에 따라 버튼 표시 설정-->
         <button th:if="${username} == 'guest'" class="btn btn-secondary my-2 my-sm-0" onclick="window.location.href='/user/login'">로그인</button>
         <button th:if="${username} == 'guest'" class="btn btn-secondary my-2 my-sm-0" onclick="window.location.href='/user/signup'">회원가입</button>
-        <button th:if="${username} != 'guest'" class="btn btn-secondary my-2 my-sm-0" onclick="window.location.href='/'">로그아웃</button>
+        <button th:if="${username} != 'guest'" class="btn btn-secondary my-2 my-sm-0" onclick="window.location.href='/user/logout'">로그아웃</button>
     </div>
 </nav>
+<div class="background-header"></div>
+<div class="background-body"></div>
 <div class="wrap">
     <div class="header">
         <h3>게시판 상세 페이지</h3>
@@ -62,6 +65,47 @@
             </div>
             <h2 class="title" th:text="${board.getTitle()}"></h2>
             <div class="contents" th:text="${board.getContent()}"></div>
+            <div class="footer">
+                <!--                글쓴이와 현재 로그인한 유저가 같을때만 삭제버튼이 보이도록-->
+                <img th:if="${username} == ${board.getAuthor()}" class="icon-delete"
+                     src="/images/delete.png" alt="삭제"
+                     th:onclick="|deleteBoard('${board.getId()}')|">
+            </div>
+        </div>
+    </div>
+    <!--    댓글 작성란-->
+    <div class="area-write">
+        <textarea class="field-userment" placeholder="댓글을 입력해주세요" id="userment" cols="30"
+                  rows="10"></textarea>
+        <img src="/images/send.png" alt="댓글쓰기" th:onclick="|SendUserment('${board.getId()}')|">
+    </div>
+    <!--    댓글 목록란-->
+    <div th:each="comment : ${comments}">
+        <div class="card">
+            <div class="metadata">
+                <div class="username" th:text="${comment.getWriter()}"></div>
+                <div class="date" th:text="${comment.getCreatedAt()}"></div>
+            </div>
+            <div class="contents">
+                <div th:id="|${comment.getId()}-cmt|" class="text" th:text="${comment.getContent()}"></div>
+                <div th:id="|${comment.getId()}-editarea|" class="edit">
+                    <textarea th:id="|${comment.getId()}-newcmt|" class="te-edit" cols="30" rows="5"></textarea>
+                </div>
+            </div>
+            <div class="footer">
+                <!--                글쓴이와 현재 로그인한 유저가 같을때만 삭제버튼이 보이도록-->
+                <img th:if="${username} == ${comment.getWriter()}" th:id="|${comment.getId()}-edit|"
+                     class="icon-start-edit"
+                     src="/images/edit.png" alt="" th:onclick="|EditComment('${comment.getId()}')|">
+
+                <img th:if="${username} == ${comment.getWriter()}" th:id="|${comment.getId()}-update|"
+                     class="icon-end-edit"
+                     src="/images/done.png" alt="" th:onclick="|updateComment('${comment.getId()}')|">
+
+                <img th:if="${username} == ${comment.getWriter()}" class="icon-delete"
+                     src="/images/delete.png" alt="삭제"
+                     th:onclick="|deleteComment('${comment.getId()}')|">
+            </div>
         </div>
     </div>
 </div>

@@ -1,5 +1,6 @@
 package com.bellpro.mini_project.domain;
 
+import com.bellpro.mini_project.dto.CommentRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,4 +22,16 @@ public class Comment extends Timestamped {
 
     @Column(nullable = false)                   // 열 설정 (무조건 입력)
     private String content;                     // 댓글 내용
+
+    // 댓글 dto 생성자
+    public Comment(CommentRequestDto commentRequestDto, String username) {
+        this.boardId = commentRequestDto.getBoardId();
+        this.writer = username;
+        this.content = commentRequestDto.getContent();
+    }
+
+    // 댓글 수정
+    public void update(CommentRequestDto commentRequestDto){
+        this.content = commentRequestDto.getContent();
+    }
 }
