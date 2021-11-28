@@ -44,7 +44,13 @@ public class UserController {
 
         // 정상 처리
         userService.registerUser(userInfoDto);  // service 로 dto 전달
-        return "redirect:/login";   // 로그인 페이지 (templates/user/login.html) 이동
+        return "redirect:/user/login";   // 로그인 페이지 (templates/user/login.html) 이동
+    }
+
+    // 사용자 로그인 페이지 요청 (GET)
+    @GetMapping("/user/login")
+    public String login(){
+        return "user/login";    // 로그인 페이지 (초기)
     }
 
 }
