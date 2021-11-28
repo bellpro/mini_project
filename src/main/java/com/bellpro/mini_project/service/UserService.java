@@ -15,9 +15,6 @@ public class UserService {
     // 클라이언트 회원가입 요청 시
     @Transactional  // 트랜잭션 처리 선언
     public void registerUser(UserInfoDto userInfoDto){
-        String username = userInfoDto.getUsername();
-        String email = userInfoDto.getEmail();
-
         // 클라이언트가 요청한 사용자 객체 생성 후 DB 저장
         User user = new User(userInfoDto);
         userRepository.save(user);
