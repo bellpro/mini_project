@@ -1,5 +1,6 @@
 package com.bellpro.mini_project.domain;
 
+import com.bellpro.mini_project.dto.KakaoUserInfoDto;
 import com.bellpro.mini_project.dto.UserInfoDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,5 +34,13 @@ public class User extends Timestamped { // 생성날짜/수정날짜 상속 받�
         this.username = userInfoDto.getUsername();
         this.password = userInfoDto.getPassword();
         this.email = userInfoDto.getEmail();
+    }
+
+    // 카카오 사용자 dto 생성자
+    public User(String username, String password, String email, Long kakaoId){
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.kakaoId = kakaoId;
     }
 }
