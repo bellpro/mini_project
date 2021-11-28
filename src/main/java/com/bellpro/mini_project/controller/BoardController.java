@@ -34,11 +34,16 @@ public class BoardController {
     }
 
     // 게시글 검색
-    @RequestMapping("/board/search")    // 요청 방식 모두 가능, 공통 URL 부분 설정할 때도 사용
-    public String searchBoard(@RequestParam(value = "keyword") String keyword, Model model){    // GET 방식으로 넘어온 URL의 쿼리에서 받는 값을 설정
+    @GetMapping("/board/search")
+    public String searchBoard(@RequestParam(value = "keyword") String keyword, Model model, @AuthenticationPrincipal UserDetailsImpl userDetails){    // GET 방식으로 넘어온 URL의 쿼리에서 받는 값을 설정
         List<Board> boardList = boardService.searchBoard(keyword);  // 키워드 검색
-
         model.addAttribute("boards", boardList);    // 키워드 검색 리스트를 전달
+        if (userDetails == null){   // 로그인 여부
+            model.addAttribute("username", "guest");
+        } else {
+            model.addAttribute("username", userDetails.getUsername());
+        }
+
         return "index"; // 메인 페이지 이동
     }
 }
