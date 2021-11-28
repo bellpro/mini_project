@@ -55,9 +55,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 로그인 처리 (POST /user/login)
                 .loginProcessingUrl("/user/login")
                 // 로그인 처리 후 성공 시 URL
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/")             // 메인 페이지로 가도록 설정
                 // 로그인 처리 후 실패 시 URL
-                .failureUrl("/user/login?error")
+                .failureUrl("/user/login?error")    // error 파라미터 값 이용하여서 프론트 에러 표시
                 .permitAll()
                 .and()
                 // [로그아웃 기능]
