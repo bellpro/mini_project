@@ -6,7 +6,7 @@ import com.bellpro.mini_project.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor    // 의존성 주입, final 필드에 대해 생성자를 생성, @Autowired 대신 사용
+@RequiredArgsConstructor    // 의존성 주입, final 필드에 대해 생성자를 생성,  @Autowired 대신 사용
 @Service    // Service 명시, @Component 포항: Bean 등록
 public class UserService {
     private final UserRepository userRepository;
