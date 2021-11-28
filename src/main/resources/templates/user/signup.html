@@ -34,8 +34,8 @@
               th:action="@{/user/signup}" th:object="${userInfoDto}" method="post">     <!-- th:action 링크, th:object 객체, method 요청방식 -->
             <div class="form-group">
                 <label for="username">아이디</label>
-                <input name="username" id="username" type="text" th:field="*{username}" class="form-control"    <!-- th:field 연결된 객체 필드(열) -->
-                       placeholder="아이디 입력" aria-describedby="nicknameHelp">
+                <input name="username" id="username" type="text" th:field="*{username}" class="form-control"
+                       placeholder="아이디 입력" aria-describedby="nicknameHelp">                                    <!-- th:field 연결된 객체 필드(열) -->
                 <small id="nicknameHelp" class="form-text text-muted">
                     공백없이 영문과 숫자로만 3자 이상입력하세요.
                 </small>
