@@ -1,16 +1,15 @@
 package com.bellpro.mini_project.controller;
 
 import com.bellpro.mini_project.dto.UserInfoDto;
+import com.bellpro.mini_project.security.UserDetailsImpl;
 import com.bellpro.mini_project.service.UserService;
 import com.bellpro.mini_project.validator.UserInfoDtoValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -24,7 +23,10 @@ public class UserController {
 
     // 회원가입 페이지 요청 (GET)
     @GetMapping("/user/signup")
-    public String signup(Model model){
+    public String signup(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        if (userDetails != null){   // 이미 로그인한 사용자면 메인 페이지로 이동
+            return "user/logged";
+        }
         model.addAttribute("userInfoDto", new UserInfoDto()); // 빈 dto 객체 생성하여 변수 전달
         return "user/signup";    // 회원가입 페이지 (초기)
     }
@@ -47,8 +49,11 @@ public class UserController {
 
     // 사용자 로그인 페이지 요청 (GET)
     @GetMapping("/user/login")
-    public String login(){
-        return "user/login";    // 로그인 페이지 (초기)
+    public String login(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        if (userDetails != null){   // 이미 로그인한 사용자면 메인 페이지로 이동
+            return "user/logged";
+        }
+        return "user/login";    // 로그인 안했으면 로그인 페이지로 이동
     }
 
 }
