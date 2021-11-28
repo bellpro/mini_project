@@ -22,12 +22,6 @@ public class UserController {
     private final UserService userService;
     private final UserInfoDtoValidator userInfoDtoValidator;
 
-    // 아이디 중복검사, 이메일 중복검사, 비밀번호 확인
-    @InitBinder
-    public void initBinder(WebDataBinder webDataBinder){
-        webDataBinder.addValidators(userInfoDtoValidator); // 검증 결과를 errors 에 넣음
-    }
-
     // 회원가입 페이지 요청 (GET)
     @GetMapping("/user/signup")
     public String signup(Model model){
@@ -38,6 +32,9 @@ public class UserController {
     // 회원가입 요청 (POST)
     @PostMapping("/user/signup")
     public String registerUser(@Valid @ModelAttribute UserInfoDto userInfoDto, Errors errors){
+        // 검증
+        userInfoDtoValidator.validate(userInfoDto, errors);
+
         // 오류 처리
         if (errors.hasErrors()){
             return "user/signup";   // 회원가입 페이지 이동 (오류 내용 포함)
