@@ -7,10 +7,8 @@ import com.bellpro.mini_project.security.UserDetailsImpl;
 import com.bellpro.mini_project.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RequiredArgsConstructor // 의존성 주입, final 필드에 대해 생성자를 생성,  @Autowired 대신 사용
 @RestController          // JSON 데이터를 주고 받는 자동 응답기
@@ -32,6 +30,5 @@ public class BoardController {
         boardRepository.deleteById(id); // 게시글 삭제
         return id;
     }
-
 }
 

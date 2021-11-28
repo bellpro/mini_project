@@ -42,41 +42,29 @@
                 <a class="nav-link" href="/">Home<span class="sr-only"></span></a>
             </li>
         </ul>
-<!--        로그인 여부에 따라 버튼 표시 설정-->
+        <!--        로그인 여부에 따라 버튼 표시 설정-->
         <button th:if="${username} == 'guest'" class="btn btn-secondary my-2 my-sm-0" onclick="window.location.href='/user/login'">로그인</button>
         <button th:if="${username} == 'guest'" class="btn btn-secondary my-2 my-sm-0" onclick="window.location.href='/user/signup'">회원가입</button>
         <button th:if="${username} != 'guest'" class="btn btn-secondary my-2 my-sm-0" onclick="window.location.href='/'">로그아웃</button>
-        <button th:if="${username} != 'guest'" class="btn btn btn-secondary my-2 my-sm-0" onclick="window.location.href='/board/write'">게시글 작성</button>
     </div>
 </nav>
 <div class="wrap">
     <div class="header">
-        <h3 th:if="${username} != 'guest'" th:text="|${username}님 환영합니다.|"></h3>
-        <p>오늘 하루 있었던 일을 게시글로 올려보세요!</p>
-        <form action="/board/search" method="GET" class="form-inline">  <!-- th:action 링크, method 요청방식 -->
-            <input name="keyword" class="form-control mr-sm-2" type="search" placeholder="게시글 검색" aria-label="Search"> <!-- 입력에 변수값 keword 설정 -->
-            <button class="btn btn-secondary my-2 my-sm-0" type="submit">검색</button>
-        </form>
+        <h3>게시판 상세 페이지</h3>
+        <p>댓글을 달아 보세요!</p>
     </div>
-    <div th:if="${boards} != ''">
-    <div id="cards-box" class="area-read" th:each="board : ${boards}">
-        <!--        반복문을 돌며 게시글 목록 띄우기 -->
-        <div class="card" th:onclick="|detailBoard('${board.getId()}')|">       <!-- th:onclick="|js함수명('${변수}')| -->
+    <div id="cards-box" class="area-read">
+        <!--        반복문을 돌며 글 목록 띄우기 -->
+        <div class="card">
             <div class="metadata">
                 <div class="username" th:text="${board.getAuthor()}"></div>
                 <div class="date" th:text="${board.getCreatedAt()}"></div>
             </div>
             <h2 class="title" th:text="${board.getTitle()}"></h2>
             <div class="contents" th:text="${board.getContent()}"></div>
-            <div class="footer">
-                <!--                글쓴이와 현재 로그인한 유저가 같을때만 삭제버튼이 보이도록-->
-                <img th:if="${username} == ${board.getAuthor()}" class="icon-delete"
-                     src="/images/delete.png" alt="삭제"
-                     th:onclick="|deleteBoard('${board.getId()}')|">
-            </div>
         </div>
     </div>
-    </div>
 </div>
+
 </body>
 </html>
