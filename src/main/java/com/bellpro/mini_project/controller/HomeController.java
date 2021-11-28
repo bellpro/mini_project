@@ -2,6 +2,7 @@ package com.bellpro.mini_project.controller;
 
 import com.bellpro.mini_project.domain.Board;
 import com.bellpro.mini_project.repository.BoardRepository;
+import com.bellpro.mini_project.repository.CommentRepository;
 import com.bellpro.mini_project.security.UserDetailsImpl;
 import com.bellpro.mini_project.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.List;
 public class HomeController {
     private final BoardRepository boardRepository;
     private final BoardService boardService;
+    private final CommentRepository commentRepository;
 
     @GetMapping("/")
     public String Home(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
@@ -42,7 +44,7 @@ public class HomeController {
         return "/board/write";   // 게시글 작성 페이지로 이동
     }
 
-    //글 상세 조회 페이지로 이동
+    //게시글 상세 조회 페이지로 이동
     @GetMapping("/board/detail/{id}")
     public String getBoardDetail(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         if (userDetails == null) {
@@ -53,11 +55,12 @@ public class HomeController {
         model.addAttribute("board", boardRepository.findById(id).orElseThrow(
                 () -> new NullPointerException("해당 게시글을 불러올 수 없습니다.")
         ));
+        model.addAttribute("comments", commentRepository.findByBoardIdOrderByCreatedAtDesc(id));    // 댓글 작성날짜 내림차순 정렬
 
         return "/board/detail";
     }
 
-    // 게시글 검색
+    // 검색어와 일치하는 게시글만 보여주기
     @GetMapping("/board/search")
     public String searchBoard(@RequestParam(value = "keyword") String keyword, Model model, @AuthenticationPrincipal UserDetailsImpl userDetails){    // GET 방식으로 넘어온 URL의 쿼리에서 받는 값을 설정
         List<Board> boardList = boardService.searchBoard(keyword);  // 키워드 검색

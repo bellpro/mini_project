@@ -17,6 +17,7 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
     <title>블로그</title>
+    <link rel="stylesheet" href="/css/board.css">
     <script src="/js/board.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
     <style>
@@ -45,10 +46,12 @@
 <!--        로그인 여부에 따라 버튼 표시 설정-->
         <button th:if="${username} == 'guest'" class="btn btn-secondary my-2 my-sm-0" onclick="window.location.href='/user/login'">로그인</button>
         <button th:if="${username} == 'guest'" class="btn btn-secondary my-2 my-sm-0" onclick="window.location.href='/user/signup'">회원가입</button>
-        <button th:if="${username} != 'guest'" class="btn btn-secondary my-2 my-sm-0" onclick="window.location.href='/'">로그아웃</button>
+        <button th:if="${username} != 'guest'" class="btn btn-secondary my-2 my-sm-0" onclick="window.location.href='/user/logout'">로그아웃</button>
         <button th:if="${username} != 'guest'" class="btn btn btn-secondary my-2 my-sm-0" onclick="window.location.href='/board/write'">게시글 작성</button>
     </div>
 </nav>
+<div class="background-header"></div>
+<div class="background-body"></div>
 <div class="wrap">
     <div class="header">
         <h3 th:if="${username} != 'guest'" th:text="|${username}님 환영합니다.|"></h3>
