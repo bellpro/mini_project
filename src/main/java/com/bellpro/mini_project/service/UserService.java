@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
 
+    // 클라이언트 회원가입 요청 시
     public String registerUser(UserInfoDto userInfoDto){
         String username = userInfoDto.getUsername();
         String email = userInfoDto.getEmail();
