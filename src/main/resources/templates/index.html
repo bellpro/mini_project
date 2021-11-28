@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <title>블로그</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Jua', sans-serif;
+        }
+        .wrap{
+            width: 800px;
+            margin: 10px auto;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <a class="navbar-brand" href="/">Bellpro</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home<span class="sr-only"></span></a>
+            </li>
+        </ul>
+        <button th:if="${username} == 'guest'" class="btn btn-secondary my-2 my-sm-0" onclick="window.location.href='/user/login'">로그인</button>
+        <button th:if="${username} == 'guest'" class="btn btn-secondary my-2 my-sm-0" onclick="window.location.href='/user/signup'">회원가입</button>
+        <button th:if="${username} != 'guest'" class="btn btn-secondary my-2 my-sm-0" onclick="window.location.href='/'">로그아웃</button>
+        <button th:if="${username} != 'guest'" class="btn btn btn-secondary my-2 my-sm-0" onclick="window.location.href='/user/login'">게시글 작성</button>
+    </div>
+</nav>
+<div class="header wrap">
+    <h3 th:if="${username} != 'guest'" th:text="|${username}님 환영합니다.|"></h3>
+    <p>오늘 하루 있었던 일을 게시글로 올려보세요!</p>
+    <form action="/board/search" method="GET" class="form-inline">
+        <input class="form-control mr-sm-2" type="search" placeholder="게시글 검색" aria-label="Search">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">검색</button>
+    </form>
+</div>
+</body>
+</html>
