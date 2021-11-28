@@ -1,5 +1,6 @@
 package com.bellpro.mini_project.domain;
 
+import com.bellpro.mini_project.dto.BoardRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,4 +22,11 @@ public class Board extends Timestamped{ // 생성날짜/수정날짜 상속 받�
 
     @Column(nullable = false)                   // 열 설정 (무조건 입력)
     private String content;                     // 게시글 내용
+
+    // 게시판 dto 생성자
+    public Board(BoardRequestDto boardRequestDto, String username){
+        this.author = username;
+        this.title = boardRequestDto.getTitle();
+        this.content = boardRequestDto.getContent();
+    }
 }
