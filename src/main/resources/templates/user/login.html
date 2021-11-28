@@ -6,22 +6,6 @@
 </head>
 <body>
 <h2>로그인</h2>
-<form th:action="@{/user/login}" th:object="${UserInfoDto}" method="post">
-    <div>
-        <label for="username">아이디</label>
-        <input name="username" id="username" type="text" th:field="*{username}" placeholder="아이디 입력"><br>
-        <small>공백없이 영문과 숫자로만 3자 이상입력하세요.</small><br>
-        <small th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</small>
-    </div>
-    <div>
-        <label for="password">비밀번호</label>
-        <input name="password" id="password" type="password" th:field="*{password}" placeholder="비밀번호 입력"><br>
-        <small>4자 이상 입력하세요.</small><br>
-        <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</small>
-    </div>
-    <div>
-        <button type="submit">로그인</button>
-    </div>
-</form>
+
 </body>
 </html>

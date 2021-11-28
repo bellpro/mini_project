@@ -6,10 +6,12 @@ import com.bellpro.mini_project.validator.UserInfoDtoValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
@@ -29,16 +31,15 @@ public class UserController {
     // 회원가입 페이지 요청 (GET)
     @GetMapping("/user/signup")
     public String signup(Model model){
-        model.addAttribute("UserInfoDto", new UserInfoDto()); // 빈 dto 객체 생성하여 변수 전달
+        model.addAttribute("userInfoDto", new UserInfoDto()); // 빈 dto 객체 생성하여 변수 전달
         return "user/signup";    // 회원가입 페이지 (초기)
     }
 
     // 회원가입 요청 (POST)
     @PostMapping("/user/signup")
-    public String registerUser(@Valid UserInfoDto userInfoDto, Errors errors, Model model){
+    public String registerUser(@Valid @ModelAttribute UserInfoDto userInfoDto, Errors errors){
         // 오류 처리
         if (errors.hasErrors()){
-            model.addAttribute("UserInfoDto", userInfoDto); // dto 객체 생성하여 변수 전달
             return "user/signup";   // 회원가입 페이지 이동 (오류 내용 포함)
         }
 
